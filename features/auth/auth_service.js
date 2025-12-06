@@ -11,6 +11,13 @@ class AuthService {
         });
         return newUser;
     }
+
+    async getUserById(userId) {
+        const user = await Auth.findByPk(userId, {
+            attributes: ["id", "name", "surname", "username", "picture_url"]
+        });
+        return user;
+    }
 }
 
 export default new AuthService();

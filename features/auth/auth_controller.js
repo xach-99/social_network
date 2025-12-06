@@ -40,6 +40,32 @@ class AuthController {
             })
         }
     }
+
+    async getUser(req, res) {
+        try {
+            const user = await AuthService.getUserById(req.userId);
+
+            if (!user) {
+                return sendResponse(res, {
+                    status: 404,
+                    ok: false,
+                    message: "User not found"
+                });
+            }
+
+            return sendResponse(res, {
+                status: 200,
+                ok: true,
+                data: { user }
+            });
+        } catch (_) {
+            return sendResponse(res, {
+                status: 500,
+                ok: false,
+                message: "Server error",
+            });
+        }
+    }
 }
 
 export default new AuthController();

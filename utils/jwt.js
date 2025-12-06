@@ -8,3 +8,7 @@ export const generateToken = (payload) => {
     expiresIn: EXPIRES_IN,
   });
 };
+
+export const verifyToken = (token) => {
+  return jwt.verify(token, SECRET_KEY);
+};

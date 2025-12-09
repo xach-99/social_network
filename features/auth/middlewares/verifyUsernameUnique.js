@@ -1,11 +1,11 @@
-import { Auth } from "../../../model/index.js";
 import { sendResponse } from "../../../utils/apiResponse.js";
+import AuthService from "../auth_service.js";
 
-export const checkUsernameUnique = async (req, res, next) => {
+export const verifyUsernameUnique = async (req, res, next) => {
     const { username } = req.body;
 
     try {
-        const existingUser = await Auth.findOne({ where: { username } });
+        const existingUser = await AuthService.findOne({ username });
         if (existingUser) {
             return sendResponse(res, {
                 status: 400,
@@ -18,8 +18,7 @@ export const checkUsernameUnique = async (req, res, next) => {
         }
 
         next();
-    } catch (err) {
-        console.error(err);
+    } catch (_) {
         return sendResponse(res, {
             status: 500,
             ok: false,

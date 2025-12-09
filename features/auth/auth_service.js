@@ -1,22 +1,26 @@
-import bcrypt from "bcrypt";
 import { Auth } from "../../model/index.js";
 
 class AuthService {
-    async createUser(data) {
-        const { password } = data;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await Auth.create({
-            ...data,
-            password: hashedPassword,
-        });
-        return newUser;
+    createUser(data) {
+        return Auth.create(data);
     }
 
-    async getUserById(userId) {
-        const user = await Auth.findByPk(userId, {
-            attributes: ["id", "name", "surname", "username", "picture_url"]
+    getUserById(userId) {
+        return Auth.findByPk(userId);
+    }
+
+    getUserPublicById(userId) {
+        return Auth.findByPk(userId, {
+            attributes: { exclude: ["password"] }
         });
-        return user;
+    }
+
+    findOne(obj) {
+        return Auth.findOne({ where: obj });
+    }
+
+    changeUserWhere(userId, obj) {
+        return Auth.update(obj, { where: { id: userId } });
     }
 }
 

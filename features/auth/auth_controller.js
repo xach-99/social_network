@@ -12,8 +12,7 @@ class AuthController {
                 ok: true,
                 message: "User created successfully"
             })
-        }
-        catch (_) {
+        } catch (_) {
             sendResponse(res, {
                 status: 500,
                 ok: false,
@@ -31,8 +30,7 @@ class AuthController {
                 message: "Login successful",
                 data: { token }
             })
-        }
-        catch (_) {
+        } catch (_) {
             sendResponse(res, {
                 status: 500,
                 ok: false,
@@ -43,7 +41,7 @@ class AuthController {
 
     async getUser(req, res) {
         try {
-            const user = await AuthService.getUserById(req.userId);
+            const user = await AuthService.getUserPublicById(req.userId);
 
             if (!user) {
                 return sendResponse(res, {
@@ -63,6 +61,43 @@ class AuthController {
                 status: 500,
                 ok: false,
                 message: "Server error",
+            });
+        }
+    }
+
+    async changeUsername(req, res) {
+        try {
+            await AuthService.changeUserWhere(req.userId, { username: req.body.username });
+            return sendResponse(res, {
+                status: 201,
+                ok: true,
+                message: "Username changed successfull"
+            });
+        } catch (_) {
+            return sendResponse(res, {
+                status: 500,
+                ok: false,
+                message: "Server error"
+            });
+        }
+    }
+
+    async changePrivacy(req, res) {
+        try {
+            const user = await AuthService.getUserPublicById(req.userId);
+            await AuthService.changeUserWhere(req.userId, { privacy: !user.privacy });
+
+            return sendResponse(res, {
+                status: 200,
+                ok: true,
+                message: "Privacy changed successfull",
+                data: { privacy: !user.privacy }
+            });
+        } catch (_) {
+            return sendResponse(res, {
+                status: 500,
+                ok: false,
+                message: "Server error"
             });
         }
     }

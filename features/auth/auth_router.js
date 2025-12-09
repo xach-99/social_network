@@ -1,15 +1,47 @@
 import express from "express";
 import authController from "./auth_controller.js";
-import { checkUsernameUnique } from "./middlewares/signupMiddleware.js";
-import { signupSchema, loginSchema } from "./validation/index.js";
-import { validate } from "./middlewares/validate.js";
-import { checkUserExist } from "./middlewares/loginMiddleware.js";
-import { authMiddleware } from "./middlewares/authMiddleware.js";
+import { verifyUsernameUnique } from "./middlewares/verifyUsernameUnique.js";
+import { signupSchema, loginSchema, usernameChangeSchema } from "./validation/index.js";
+import { validateBody } from "./middlewares/validateBody.js";
+import { verifyUserExist } from "./middlewares/verifyUserExist.js";
+import { verifyAccessToken } from "./middlewares/verifyToken.js";
+import { verifyPassword } from "./middlewares/verifyPassword.js";
+import { hashPassword } from "./middlewares/hashPassword.js";
 
 export const authRouter = express.Router();
 
-authRouter.post("/signup", [validate(signupSchema), checkUsernameUnique], authController.signup);
+authRouter.post(
+    "/signup",
+    validateBody(signupSchema),
+    verifyUsernameUnique,
+    hashPassword,
+    authController.signup
+);
 
-authRouter.post("/login", [validate(loginSchema), checkUserExist], authController.login);
+authRouter.post(
+    "/login",
+    validateBody(loginSchema),
+    verifyUserExist,
+    authController.login
+);
 
-authRouter.get("/user", authMiddleware, authController.getUser);
+authRouter.get(
+    "/user",
+    verifyAccessToken,
+    authController.getUser
+);
+
+authRouter.patch(
+    "/user/username",
+    verifyAccessToken,
+    validateBody(usernameChangeSchema),
+    verifyPassword,
+    verifyUsernameUnique,
+    authController.changeUsername
+);
+
+authRouter.patch(
+    "/user/privacy",
+    verifyAccessToken,
+    authController.changePrivacy
+);

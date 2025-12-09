@@ -1,12 +1,12 @@
-import { Auth } from "../../../model/index.js";
 import { sendResponse } from "../../../utils/apiResponse.js";
 import bcrypt from "bcrypt";
+import AuthService from "../auth_service.js";
 
-export const checkUserExist = async (req, res, next) => {
+export const verifyUserExist = async (req, res, next) => {
     const { username, password } = req.body;
 
     try {
-        const user = await Auth.findOne({ where: { username } });
+        const user = await AuthService.findOne({ username });
         if (!user) {
             return sendResponse(res, {
                 status: 401,

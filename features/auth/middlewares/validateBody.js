@@ -1,6 +1,6 @@
 import { sendResponse } from "../../../utils/apiResponse.js";
 
-export const validate = (schema) => (req, res, next) => {
+export const validateBody = (schema) => (req, res, next) => {
     const { error } = schema.validate(req.body, { abortEarly: false });
     const errorsGroup = {};
 

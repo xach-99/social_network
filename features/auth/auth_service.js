@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Auth } from "../../model/index.js";
 
 class AuthService {
@@ -21,6 +22,22 @@ class AuthService {
 
     changeUserWhere(userId, obj) {
         return Auth.update(obj, { where: { id: userId } });
+    }
+
+    searchUsers(searchText) {
+        return Auth.findAll({
+            where: {
+                username: {
+                    [Op.like]: `${searchText}%`
+                }
+            },
+            attributes: [
+                "name",
+                "surname",
+                "username",
+                "picture_url"
+            ]
+        })
     }
 }
 

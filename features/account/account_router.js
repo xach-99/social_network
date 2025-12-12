@@ -9,3 +9,9 @@ accountRouter.get(
     verifyAccessToken,
     accountController.search
 );
+
+accountRouter.get(
+    "/:id",
+    verifyAccessToken,
+    accountController.getAccount
+);

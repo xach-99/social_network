@@ -39,6 +39,17 @@ class AuthService {
             ]
         })
     }
+
+    getAccountById(accountId) {
+        return Auth.findByPk(accountId, {
+            attributes: [
+                "name",
+                "surname",
+                "username",
+                "picture_url"
+            ]
+        });
+    }
 }
 
 export default new AuthService();

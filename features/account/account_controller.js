@@ -19,6 +19,32 @@ class AccountController {
             });
         }
     }
+
+    async getAccount(req, res) {
+        try {
+            const user = await authService.getAccountById(req.params.id);
+            if (!user) {
+                return sendResponse(res, {
+                    status: 404,
+                    ok: false,
+                    message: "Account not found"
+                });
+            }
+
+            return sendResponse(res, {
+                status: 200,
+                ok: true,
+                message: "Found User",
+                data: { user }
+            })
+        } catch (_) {
+            return sendResponse(res, {
+                status: 500,
+                ok: false,
+                message: "Server error"
+            });
+        }
+    }
 }
 
 export default new AccountController();

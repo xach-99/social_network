@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Auth } from "../../model/index.js";
+import { Auth, Post, Follow } from "../../model/index.js";
 
 class AuthService {
     createUser(data) {
@@ -40,8 +40,8 @@ class AuthService {
         })
     }
 
-    getAccountById(accountId) {
-        return Auth.findByPk(accountId, {
+    async getAccountById(accountId) {
+        const user = await Auth.findByPk(accountId, {
             attributes: [
                 "name",
                 "surname",
@@ -49,6 +49,17 @@ class AuthService {
                 "picture_url"
             ]
         });
+
+        const postCount = await Post.count({ where: { user_id: accountId } });
+        const followersCount = await Follow.count({ where: { following_id: accountId } });
+        const followingsCount = await Follow.count({ where: { follower_id: accountId } });
+
+        return {
+            ...user.toJSON(),
+            postCount,
+            followersCount,
+            followingsCount
+        }
     }
 }
 

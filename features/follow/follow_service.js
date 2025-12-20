@@ -1,4 +1,4 @@
-import { Auth, Follow } from "../../model/index.js";
+import { Auth, Follow, FollowRequest } from "../../model/index.js";
 
 class FollowService {
     async getUserFollowers(userId) {
@@ -41,6 +41,56 @@ class FollowService {
         });
 
         return followings?.map(item => item.following);
+    }
+
+    userAlreadyFollow(userId, accountId) {
+        return Follow.findOne({
+            where: {
+                follower_id: userId,
+                following_id: accountId
+            }
+        })
+    }
+
+    followUser(userId, accountId) {
+        return Follow.create({
+            follower_id: userId,
+            following_id: accountId
+        });
+    }
+
+    unfollowUser(userId, accountId) {
+        return Follow.destroy({
+            where: {
+                follower_id: userId,
+                following_id: accountId
+            }
+        });
+    }
+
+    userAlreadySentRequest(userId, accountId) {
+        return FollowRequest.findOne({
+            where: {
+                sender_id: userId,
+                receiver_id: accountId
+            }
+        })
+    }
+
+    sendFollowRequest(userId, accountId) {
+        return FollowRequest.create({
+            sender_id: userId,
+            receiver_id: accountId
+        });
+    }
+
+    cancelFollowRequest(userId, accountId) {
+        return FollowRequest.destroy({
+            where: {
+                sender_id: userId,
+                receiver_id: accountId
+            }
+        });
     }
 }
 

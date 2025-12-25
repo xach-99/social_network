@@ -16,6 +16,12 @@ accountRouter.get(
 );
 
 accountRouter.get(
+    "/requests",
+    asyncHandler(verifyAccessToken),
+    asyncHandler(accountController.getRequests)
+);
+
+accountRouter.get(
     "/:id",
     asyncHandler(verifyAccessToken),
     asyncHandler(accountController.getAccount)

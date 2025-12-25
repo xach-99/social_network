@@ -49,7 +49,7 @@ class FollowService {
                 follower_id: userId,
                 following_id: accountId
             }
-        })
+        });
     }
 
     followUser(userId, accountId) {
@@ -74,7 +74,7 @@ class FollowService {
                 sender_id: userId,
                 receiver_id: accountId
             }
-        })
+        });
     }
 
     sendFollowRequest(userId, accountId) {
@@ -90,6 +90,26 @@ class FollowService {
                 sender_id: userId,
                 receiver_id: accountId
             }
+        });
+    }
+
+    getRequests(userId) {
+        return FollowRequest.findAll({
+            where: {
+                receiver_id: userId
+            },
+            attributes: ["createdAt"],
+            include: [{
+                model: Auth,
+                as: "sender",
+                attributes: [
+                    "id",
+                    "name",
+                    "surname",
+                    "username",
+                    "picture_url"
+                ]
+            }]
         });
     }
 }

@@ -5,26 +5,27 @@ import followController from "../follow/follow_controller.js";
 import { loadTargetUser } from "../follow/middlewares/loadTargetUser.js";
 import { resolveFollowState } from "../follow/middlewares/resolveFollowState.js";
 import { resolveFollowRequestState } from "../follow/middlewares/resolveFollowRequestState.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
 
 export const accountRouter = express.Router();
 
 accountRouter.get(
     "/search/:text",
-    verifyAccessToken,
-    accountController.search
+    asyncHandler(verifyAccessToken),
+    asyncHandler(accountController.search)
 );
 
 accountRouter.get(
     "/:id",
-    verifyAccessToken,
-    accountController.getAccount
+    asyncHandler(verifyAccessToken),
+    asyncHandler(accountController.getAccount)
 );
 
 accountRouter.post(
     "/:id/follow",
-    verifyAccessToken,
-    loadTargetUser,
-    resolveFollowState,
-    resolveFollowRequestState,
-    followController.followRequest
+    asyncHandler(verifyAccessToken),
+    asyncHandler(loadTargetUser),
+    asyncHandler(resolveFollowState),
+    asyncHandler(resolveFollowRequestState),
+    asyncHandler(followController.followRequest)
 );

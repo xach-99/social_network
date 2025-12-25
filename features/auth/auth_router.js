@@ -9,59 +9,60 @@ import { verifyUserExist } from "./middlewares/verifyUserExist.js";
 import { verifyAccessToken } from "./middlewares/verifyToken.js";
 import { verifyPassword } from "./middlewares/verifyPassword.js";
 import { hashPassword } from "./middlewares/hashPassword.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
 
 export const authRouter = express.Router();
 
 authRouter.post(
     "/signup",
     validateBody(signupSchema),
-    verifyUsernameUnique,
-    hashPassword,
-    authController.signup
+    asyncHandler(verifyUsernameUnique),
+    asyncHandler(hashPassword),
+    asyncHandler(authController.signup)
 );
 
 authRouter.post(
     "/login",
     validateBody(loginSchema),
-    verifyUserExist,
-    authController.login
+    asyncHandler(verifyUserExist),
+    asyncHandler(authController.login)
 );
 
 authRouter.get(
     "/user",
-    verifyAccessToken,
-    authController.getUser
+    asyncHandler(verifyAccessToken),
+    asyncHandler(authController.getUser)
 );
 
 authRouter.patch(
     "/user/username",
-    verifyAccessToken,
+    asyncHandler(verifyAccessToken),
     validateBody(usernameChangeSchema),
-    verifyPassword,
-    verifyUsernameUnique,
-    authController.changeUsername
+    asyncHandler(verifyPassword),
+    asyncHandler(verifyUsernameUnique),
+    asyncHandler(authController.changeUsername)
 );
 
 authRouter.patch(
     "/user/privacy",
-    verifyAccessToken,
-    authController.changePrivacy
+    asyncHandler(verifyAccessToken),
+    asyncHandler(authController.changePrivacy)
 );
 
 authRouter.get(
     "/user/followers",
-    verifyAccessToken,
-    followController.getFollowers
+    asyncHandler(verifyAccessToken),
+    asyncHandler(followController.getFollowers)
 );
 
 authRouter.get(
     "/user/followings",
-    verifyAccessToken,
-    followController.getFollowings
+    asyncHandler(verifyAccessToken),
+    asyncHandler(followController.getFollowings)
 );
 
 authRouter.get(
     "/user/posts",
-    verifyAccessToken,
-    postController.getUserPosts
+    asyncHandler(verifyAccessToken),
+    asyncHandler(postController.getUserPosts)
 );

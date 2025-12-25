@@ -2,6 +2,7 @@ import express from "express";
 import { sequelize } from "./model/index.js";
 import { authRouter } from "./features/auth/auth_router.js";
 import { accountRouter } from "./features/account/account_router.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use("/auth", authRouter);
 
 app.use("/account", accountRouter);
 
+app.use(errorHandler);
 
 sequelize.sync().then(() => {
     console.log("DB SYNC");

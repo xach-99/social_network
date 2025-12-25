@@ -1,5 +1,3 @@
-import { sendResponse } from "../../../utils/apiResponse.js";
-
 export const validateBody = (schema) => (req, res, next) => {
     const { error } = schema.validate(req.body, { abortEarly: false });
     const errorsGroup = {};
@@ -13,9 +11,8 @@ export const validateBody = (schema) => (req, res, next) => {
             }
         });
 
-        return sendResponse(res, {
+        return next({
             status: 400,
-            ok: false,
             message: "Validation failed",
             errors: errorsGroup,
         });

@@ -1,12 +1,13 @@
 export const sendResponse = (res, {
     status = 200,
     ok = true,
-    message = "",
+    message = null,
     data = null,
     errors = null
 }) => {
-    const response = { ok, message };
+    const response = { ok };
 
+    if (message) response.message = message;
     if (data) response.data = data;
     if (errors) response.errors = errors;
 

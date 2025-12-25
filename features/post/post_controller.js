@@ -5,9 +5,7 @@ class PostController {
     async getUserPosts(req, res) {
         const posts = await postService.getUserPosts(req.userId);
         return sendResponse(res, {
-            status: 200,
-            ok: true,
-            message: "Found posts",
+            message: "User posts retrieved successfully",
             data: { posts }
         })
     }

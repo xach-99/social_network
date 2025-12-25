@@ -5,9 +5,7 @@ class AuthController {
     async getFollowers(req, res) {
         const users = await followService.getUserFollowers(req.userId);
         return sendResponse(res, {
-            status: 200,
-            ok: true,
-            message: "Found followers",
+            message: "Followers retrieved successfully",
             data: { users }
         });
     }
@@ -15,9 +13,7 @@ class AuthController {
     async getFollowings(req, res) {
         const users = await followService.getUserFollowings(req.userId);
         return sendResponse(res, {
-            status: 200,
-            ok: true,
-            message: "Found followings",
+            message: "Followings retrieved successfully",
             data: { users }
         });
     }
@@ -29,37 +25,29 @@ class AuthController {
         if (isFollowing) {
             await followService.unfollowUser(req.userId, id);
             return sendResponse(res, {
-                status: 200,
-                ok: true,
-                message: "Unfollow User",
+                message: "User unfollowed successfully",
                 data: { user: targetUser }
             });
         }
-        else if (privacy) {
+        if (privacy) {
             if (hasRequest) {
                 await followService.cancelFollowRequest(userId, id);
                 return sendResponse(res, {
-                    status: 200,
-                    ok: true,
-                    message: "Cancel Follow Request",
+                    message: "Follow request canceled successfully",
                     data: { user: targetUser }
                 });
             }
 
             await followService.sendFollowRequest(userId, id);
             return sendResponse(res, {
-                status: 200,
-                ok: true,
-                message: "Sent Follow Request",
+                message: "Follow request sent successfully",
                 data: { user: targetUser }
             });
         }
 
         await followService.followUser(userId, id);
         return sendResponse(res, {
-            status: 200,
-            ok: true,
-            message: "Follow User",
+            message: "User followed successfully",
             data: { user: targetUser }
         });
     }

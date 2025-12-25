@@ -5,7 +5,7 @@ class AccountController {
     async search(req, res) {
         const users = await authService.searchUsers(req.params.text);
         return sendResponse(res, {
-            message: "Found Users",
+            message: "Users found successfully",
             data: { users }
         })
     }
@@ -20,7 +20,7 @@ class AccountController {
         }
 
         return sendResponse(res, {
-            message: "Found User",
+            message: "User retrieved successfully",
             data: { user }
         })
     }

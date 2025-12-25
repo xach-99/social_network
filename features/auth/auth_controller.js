@@ -8,7 +8,6 @@ class AuthController {
 
         sendResponse(res, {
             status: 201,
-            ok: true,
             message: "User created successfully"
         })
     }
@@ -17,7 +16,6 @@ class AuthController {
         const token = generateToken({ id: req.userId });
 
         sendResponse(res, {
-            status: 200,
             message: "Login successful",
             data: { token },
         });
@@ -34,8 +32,7 @@ class AuthController {
         }
 
         return sendResponse(res, {
-            status: 200,
-            ok: true,
+            message: "User retrieved successfully",
             data: { user }
         });
     }
@@ -48,8 +45,7 @@ class AuthController {
 
         return sendResponse(res, {
             status: 201,
-            ok: true,
-            message: "Username changed successfull"
+            message: "Username changed successfully"
         });
     }
 
@@ -61,9 +57,7 @@ class AuthController {
         );
 
         return sendResponse(res, {
-            status: 200,
-            ok: true,
-            message: "Privacy changed successfull",
+            message: "Privacy changed successfully",
             data: { privacy: !user.privacy }
         });
     }

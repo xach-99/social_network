@@ -69,6 +69,19 @@ class AuthController {
             message: "Follow request accepted successfully",
         });
     }
+
+    async declineFollowRequest(req, res){
+        const { sender_id, receiver_id } = req.request;
+
+        await followService.cancelFollowRequest(
+            sender_id,
+            receiver_id
+        );
+
+        return sendResponse(res, {
+            message: "Follow request declined successfully",
+        });
+    }
 }
 
 export default new AuthController();

@@ -12,3 +12,10 @@ followRouter.patch(
     asyncHandler(checkFollowRequestExists),
     asyncHandler(followController.acceptFollowRequest)
 );
+
+followRouter.patch(
+    "/:id/decline",
+    asyncHandler(verifyAccessToken),
+    asyncHandler(checkFollowRequestExists),
+    asyncHandler(followController.declineFollowRequest)
+);

@@ -1,7 +1,6 @@
 import express from "express";
 import authController from "./auth_controller.js";
 import followController from "../follow/follow_controller.js";
-import postController from "../post/post_controller.js";
 import { signupSchema, loginSchema, usernameChangeSchema } from "./validation/index.js";
 import { verifyUsernameUnique } from "./middlewares/verifyUsernameUnique.js";
 import { validateBody } from "./middlewares/validateBody.js";
@@ -59,10 +58,4 @@ authRouter.get(
     "/user/followings",
     asyncHandler(verifyAccessToken),
     asyncHandler(followController.getFollowings)
-);
-
-authRouter.get(
-    "/user/posts",
-    asyncHandler(verifyAccessToken),
-    asyncHandler(postController.getUserPosts)
 );

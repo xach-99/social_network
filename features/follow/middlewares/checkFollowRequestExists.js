@@ -10,6 +10,13 @@ export const checkFollowRequestExists = async (req, res, next) => {
         });
     }
 
+    if (request.receiver_id !== req.userId) {
+        return next({
+            status: 403,
+            message: "You are not allowed to manage this follow request"
+        });
+    }
+
     req.request = request;
     next();
 };

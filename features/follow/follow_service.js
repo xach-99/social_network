@@ -84,11 +84,11 @@ class FollowService {
         });
     }
 
-    cancelFollowRequest(userId, accountId) {
+    cancelFollowRequest(sender_id, receiver_id) {
         return FollowRequest.destroy({
             where: {
-                sender_id: userId,
-                receiver_id: accountId
+                sender_id,
+                receiver_id
             }
         });
     }
@@ -111,6 +111,10 @@ class FollowService {
                 ]
             }]
         });
+    }
+
+    getRequest(requestId) {
+        return FollowRequest.findByPk(requestId);
     }
 }
 

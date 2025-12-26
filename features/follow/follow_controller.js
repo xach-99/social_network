@@ -51,6 +51,24 @@ class AuthController {
             data: { user: targetUser }
         });
     }
+
+    async acceptFollowRequest(req, res) {
+        const { sender_id, receiver_id } = req.request;
+
+        await followService.cancelFollowRequest(
+            sender_id,
+            receiver_id
+        );
+
+        await followService.followUser(
+            sender_id,
+            receiver_id
+        );
+
+        return sendResponse(res, {
+            message: "Follow request accepted successfully",
+        });
+    }
 }
 
 export default new AuthController();

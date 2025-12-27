@@ -8,6 +8,10 @@ class PostService {
             }
         })
     }
+
+    createPost(body) {
+        return Post.create(body);
+    }
 }
 
 export default new PostService();

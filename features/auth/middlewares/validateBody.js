@@ -1,4 +1,6 @@
 export const validateBody = (schema) => (req, res, next) => {
+    if(!req.body) req.body = {};
+
     const { error } = schema.validate(req.body, { abortEarly: false });
     const errorsGroup = {};
 

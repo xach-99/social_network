@@ -26,6 +26,15 @@ class PostController {
         })
     }
 
+    async getPost(req, res) {
+        const post = await postService.getPostDetails(req.params.id);
+
+        return sendResponse(res, {
+            message: "Post found successfully",
+            data: { post }
+        })
+    }
+
     async postLike(req, res) {
         await postService.postLike(
             req.userId,

@@ -25,6 +25,18 @@ class PostController {
             message: "Post created successfully",
         })
     }
+
+    async postLike(req, res) {
+        await postService.postLike(
+            req.userId,
+            req.params.id
+        );
+
+        return sendResponse(res, {
+            status: 200,
+            message: "Post liked successfully",
+        })
+    }
 }
 
 export default new PostController();

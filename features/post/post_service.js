@@ -1,4 +1,4 @@
-import { Post } from "../../model/index.js";
+import { Post, PostLike } from "../../model/index.js";
 
 class PostService {
     getUserPosts(userId) {
@@ -9,8 +9,11 @@ class PostService {
         })
     }
 
-    createPost(body) {
-        return Post.create(body);
+    postLike(userId, postId) {
+        return PostLike.create({
+            user_id: userId,
+            post_id: postId
+        });
     }
 }
 

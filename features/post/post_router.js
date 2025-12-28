@@ -21,3 +21,9 @@ postRouter.post(
     validateBody(createPostSchema),
     asyncHandler(postController.createPost)
 );
+
+postRouter.post(
+    "/:id/like",
+    asyncHandler(verifyAccessToken),
+    asyncHandler(postController.postLike)
+);

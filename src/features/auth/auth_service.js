@@ -50,6 +50,10 @@ class AuthService {
             ]
         });
 
+        if(!user){
+            return null;
+        }
+
         const postCount = await Post.count({ where: { user_id: accountId } });
         const followersCount = await Follow.count({ where: { following_id: accountId } });
         const followingsCount = await Follow.count({ where: { follower_id: accountId } });

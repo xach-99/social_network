@@ -1,10 +1,10 @@
 import express from "express";
 import { asyncHandler } from "../../utils/asyncHandler.js";
-import { verifyAccessToken } from "../auth/middlewares/verifyToken.js";
+import { verifyAccessToken } from "../../middlewares/verifyAccessToken.js";
 import postController from "./post_controller.js";
 import { upload } from "../../middlewares/multer.js";
-import { validateBody } from "../auth/middlewares/validateBody.js";
-import { createPostSchema } from "../auth/validation/index.js";
+import { validateBody } from "../../middlewares/validateBody.js";
+import { createPostSchema } from "../../validation/index.js";
 import { checkPostAccess } from "./middlewares/checkPostAccess.js"
 import { checkPostExist } from "./middlewares/checkPostExist.js";
 import { checkPostOwner } from "./middlewares/checkPostOwner.js";

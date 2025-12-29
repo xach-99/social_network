@@ -13,6 +13,7 @@ class AccountController {
 
     async getAccount(req, res) {
         const user = await authService.getAccountById(req.params.id);
+
         if (!user) {
             throw {
                 status: 404,

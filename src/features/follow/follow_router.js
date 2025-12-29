@@ -1,6 +1,6 @@
 import express from "express";
 import { asyncHandler } from "../../utils/asyncHandler.js";
-import { verifyAccessToken } from "../auth/middlewares/verifyToken.js";
+import { verifyAccessToken } from "../../middlewares/verifyAccessToken.js";
 import followController from "./follow_controller.js";
 import { checkFollowRequestExists } from "./middlewares/checkFollowRequestExists.js";
 

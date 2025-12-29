@@ -1,4 +1,4 @@
-import { verifyToken } from "../../../utils/jwt.js";
+import { verifyToken } from "../utils/jwt.js";
 
 export const verifyAccessToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -8,7 +8,6 @@ export const verifyAccessToken = (req, res, next) => {
             message: "No authorization token provided",
         });
     }
-
     const token = authHeader.split(" ")[1];
     const decoded = verifyToken(token);
     req.userId = decoded.id;

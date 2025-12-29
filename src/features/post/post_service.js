@@ -9,6 +9,10 @@ class PostService {
         })
     }
 
+    createPost(body) {
+        return Post.create(body);
+    }
+
     postLike(userId, postId) {
         return PostLike.create({
             user_id: userId,

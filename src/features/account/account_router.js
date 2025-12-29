@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyAccessToken } from "../auth/middlewares/verifyToken.js";
+import { verifyAccessToken } from "../../middlewares/verifyAccessToken.js";
 import accountController from "./account_controller.js";
 import followController from "../follow/follow_controller.js";
 import { loadTargetUser } from "../follow/middlewares/loadTargetUser.js";

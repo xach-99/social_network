@@ -1,11 +1,11 @@
 import express from "express";
 import authController from "./auth_controller.js";
 import followController from "../follow/follow_controller.js";
-import { signupSchema, loginSchema, usernameChangeSchema } from "./validation/index.js";
+import { signupSchema, loginSchema, usernameChangeSchema } from "../../validation/index.js";
 import { verifyUsernameUnique } from "./middlewares/verifyUsernameUnique.js";
-import { validateBody } from "./middlewares/validateBody.js";
+import { validateBody } from "../../middlewares/validateBody.js";
 import { verifyUserExist } from "./middlewares/verifyUserExist.js";
-import { verifyAccessToken } from "./middlewares/verifyToken.js";
+import { verifyAccessToken } from "../../middlewares/verifyAccessToken.js";
 import { verifyPassword } from "./middlewares/verifyPassword.js";
 import { hashPassword } from "./middlewares/hashPassword.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";

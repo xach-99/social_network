@@ -5,6 +5,7 @@ import followModel from "../features/follow/models/follow_model.js";
 import followRequestModel from "../features/follow/models/follow_request_model.js";
 import postModel from "../features/post/models/post_model.js";
 import postLikeModel from "../features/post/models/post_like_model.js";
+import postCommentModel from "../features/post/models/post_comment_model.js";
 
 export const sequelize = loader;
 
@@ -13,6 +14,7 @@ export const Follow = followModel(sequelize, DataTypes);
 export const FollowRequest = followRequestModel(sequelize, DataTypes);
 export const Post = postModel(sequelize, DataTypes);
 export const PostLike = postLikeModel(sequelize, DataTypes);
+export const PostComment = postCommentModel(sequelize, DataTypes);
 
 Auth.hasMany(Follow, { foreignKey: "following_id", as: "followers" });
 Follow.belongsTo(Auth, { foreignKey: "following_id", as: "following" });
@@ -34,3 +36,9 @@ PostLike.belongsTo(Post, { foreignKey: "post_id", as: "post" });
 
 Auth.hasMany(PostLike, { foreignKey: "user_id", as: "postLikes" });
 PostLike.belongsTo(Auth, { foreignKey: "user_id", as: "user" });
+
+Auth.hasMany(PostComment, { foreignKey: "user_id", as: "postComments" });
+PostComment.belongsTo(Auth, { foreignKey: "user_id", as: "user" });
+
+Post.hasMany(PostComment, { foreignKey: "post_id", as: "postComments" });
+PostComment.belongsTo(Post, { foreignKey: "post_id", as: "post" });

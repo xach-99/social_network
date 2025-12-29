@@ -39,3 +39,9 @@ postRouter.post(
     asyncHandler(verifyAccessToken),
     asyncHandler(postController.postLike)
 );
+
+postRouter.post(
+    "/:id/comment",
+    asyncHandler(verifyAccessToken),
+    asyncHandler(postController.postComment)
+);

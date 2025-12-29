@@ -1,4 +1,4 @@
-import { Post, PostLike, Auth } from "../../model/index.js";
+import { Post, PostLike, Auth, PostComment } from "../../model/index.js";
 
 class PostService {
     getUserPosts(userId) {
@@ -14,6 +14,10 @@ class PostService {
             user_id: userId,
             post_id: postId
         });
+    }
+
+    postComment(body) {
+        return PostComment.create(body);
     }
 
     getPostById(postId) {

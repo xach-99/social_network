@@ -42,8 +42,19 @@ class PostController {
         );
 
         return sendResponse(res, {
-            status: 200,
             message: "Post liked successfully",
+        })
+    }
+
+    async postComment(req, res) {
+        await postService.postComment({
+            user_id: req.userId,
+            post_id: req.params.id,
+            comment: req.body.comment
+        });
+
+        return sendResponse(res, {
+            message: "Comment added successfully",
         })
     }
 }

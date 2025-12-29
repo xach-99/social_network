@@ -16,6 +16,15 @@ class PostService {
         });
     }
 
+    userAlreadyLiked(userId, postId) {
+        return PostLike.findOne({
+            where: {
+                user_id: userId,
+                post_id: postId
+            }
+        });
+    }
+
     postComment(body) {
         return PostComment.create(body);
     }
@@ -31,6 +40,24 @@ class PostService {
                     model: PostLike,
                     as: "postLikes",
                     attributes: ["id", "user_id", "createdAt"],
+                    include: [
+                        {
+                            model: Auth,
+                            as: "user",
+                            attributes: [
+                                "id",
+                                "name",
+                                "surname",
+                                "username",
+                                "picture_url"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    model: PostComment,
+                    as: "postComments",
+                    attributes: ["id", "comment", "createdAt"],
                     include: [
                         {
                             model: Auth,
